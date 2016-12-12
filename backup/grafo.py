@@ -8,13 +8,13 @@ class Grafo(object):
 		
 		file = open(file_name,"r")
 		
-		self.num_vertex = int(file.readline())
+		self.num_vextex = int(file.readline())
 		
 		self.car_list = []
 
-		self.vertex = [[] for i in range(self.num_vertex)]
+		self.vertex = [[] for i in range(self.num_vextex)]
 
-		self.distance_matrix = [[None]*self.num_vertex for i in range(self.num_vertex)]
+		self.distance_matrix = [[None]*self.num_vextex for i in range(self.num_vextex)]
 		
 		id = 0
 		for line in file:
@@ -50,40 +50,21 @@ class Grafo(object):
 
 	def calc_dist(self): 
 		"""Calcula a distancia euclidiana entre todos os vertices"""
-		for i in range(self.num_vertex):
-			for j in range(self.num_vertex):
+		for i in range(self.num_vextex):
+			for j in range(self.num_vextex):
 				self.distance_matrix[i][j] = round(math.sqrt(((self.vertex[i][0]-self.vertex[j][0])**2)+((self.vertex[i][1]-self.vertex[j][1])**2)),2)
 
 	def __repr__(self):
 		"""print(g) -> Printa os vertices e a matriz de distancia"""
 		string = "------------| Vertices |------------\n\n"
-		for i in range(self.num_vertex):
+		for i in range(self.num_vextex):
 			string +=str(i)+" ["+str(self.vertex[i][0])+","+str(self.vertex[i][1])+"]\n"
 		string += "\n------------| Matriz |------------\n\n"
-		for i in range(self.num_vertex):
-			for j in range(self.num_vertex):
+		for i in range(self.num_vextex):
+			for j in range(self.num_vextex):
 				string+=str(self.distance_matrix[i][j])+" "
 			string+="\n"
 		string+="\n------------| END |------------"
 		return string
-
-
-
-	def plot(self,caminho):
-		file = open("grafo.html","w")
-		start = " <!DOCTYPE html><html><body><svg height=\"800\" width=\"800\"><polyline points=\""
-		middle = ""
-		for i in caminho:
-			x = self.vertex[i]
-			middle += " "+str(x[0]*2.5)+","+str(x[1]*2.5)
-		middle +="\"style=\"fill:none;stroke:black;stroke-width:1\"/>"
-		middle2=""
-		for i in caminho:
-			x = self.vertex[i]
-			middle2+= "<circle cx=\""+str(x[0]*2.5)+"\" cy=\""+str(x[1]*2.5)+"\" r=\"3\"  fill=\"red\" />"
-
-		end = "</svg></body></html>"
-		string_write= start+middle+middle2+end
-		file.write(string_write)
 
 

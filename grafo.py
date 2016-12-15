@@ -69,8 +69,9 @@ class Grafo(object):
 
 
 
-	def plot(self,caminho):
-		file = open("grafo.html","w")
+	def plot(self,caminho, path,carro = None):
+		
+		file = open(path,"w")
 		start = " <!DOCTYPE html><html><body><svg height=\"800\" width=\"800\"><polyline points=\""
 		middle = ""
 		for i in caminho:

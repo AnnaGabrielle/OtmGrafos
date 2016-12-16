@@ -7,11 +7,8 @@ class Car(object):
 		self.rent_price = rent_price
 		self.back_price = back_price
 
-	def calc_cost(self,g,i,j):
-		dist = g.get_dist(i,j)
-		if(dist != None):
-			return self.gas_price*dist
-		return 999999999
+	def kmpl(self):
+		return self.gas_price
 
 	def rent(self,vertex):
 		return self.rent_price[vertex]

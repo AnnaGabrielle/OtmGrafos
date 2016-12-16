@@ -1,35 +1,27 @@
 from grafo import Grafo
+from create import *
 from heuristica import *
 from backtracking import *
+from forca_bruta import *
 import itertools
 
-#g = Grafo("10V.graph","10V_3C_data.car")
-#caminhos = tsp(g)
-#caminho_antes, valor = menor_caminho(g, caminhos) 
-#caminho= twoOpt(g, caminho_antes)
-#distOpt = calcularDistancia(g, caminho)
-#print(distOpt)
+#--------------- chamada do create, para criar os arquivos  ---------
+#create_graph_data(5) # (numero de vertices)
+#create_car_data(3,5) #(numero de carros, numero de vertices)
 
+#---------------------necessario para Forca Bruta E Backtraking------
+#g = Grafo("5_v.graph","5V_3C_data.car")
+
+#--------------- chamada Forca Bruta -------------------------------- 
+#custo_minimo, carro_usado,caminho_usado = forca_bruta(g)
+#g.plot(caminho_usado, "plotandoResultado_forcaBruta.html")
+
+#--------------- chamada heuristica ---------------------------------
+#exec_heurica("5_v.graph","5V_3C_data.car")
+
+# -------------- chamada do backtracking, só tem o tsp --------------
+#caminho, car, calculo = exec_heurica("5_v.graph","5V_3C_data.car")
+#distOpt = calcularDistancia(g, caminho)
 #vertices = montando_vertices(g)
 #custoback = tsp_backtracking(g, vertices, 1, 0, distOpt)
-#print(custoback)
-
-exec_heurica("5_v.graph","5V_4C_data.car")
-# g = Grafo("140_v.graph","140V_25C_data.car")
-# caminhos = tsp(g)
-
-# #print(g)
-
-# caminho, valor = menor_caminho(g, caminhos)	
-
-# g.plot(caminho,	"antes.html")
-# caminho = twoOpt(g, caminho)
-# print(len(caminho))
-# print(caminho)
-# car = carroh(g,caminho)
-# print(len(car))
-# print(car)
-# g.plot(caminho, "depois.html")
-
-# calculo,car = calculando_valor(g, caminho, car)
-# print(calculo, car)
+#print("Custo caminho backtracking: ", custoback)

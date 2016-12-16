@@ -98,7 +98,7 @@ def twoOptSwap(caminho, i, k):
 	novo_caminho = inicio + meio + final
 	return novo_caminho
 
-def twoOpt(g,caminho):
+def twoOpt(g,caminho):  #2opt para melhorar o caminho
 	print("Start 2-OPT")
 	start = time.time()
 	mudou = True 
@@ -106,7 +106,7 @@ def twoOpt(g,caminho):
 	caminho_atual = caminho[:-1]
 	itt = 1
 	mudanca = 0 
-	while mudou and itt<999999 and mudanca <= 150:
+	while mudou and itt<999999 and mudanca <= 150: #limita o número de mudanças 
 		
 		mudou = False
 		for i in range(g.num_vertex-1):
@@ -180,46 +180,46 @@ def calculando_valor(g, caminho_tsp, car_minho):  #Custo total da viagem com a t
 	vaux_carro = 0
 	vaux_vertice = 0
 	caminho_tuple = []
-	for i in range(len(caminho_tsp)-1):
+	for i in range(len(caminho_tsp)-1): #para o caminho ter o mesmo tamanho do car_minho
 		caminho_tuple.append(tuple([caminho_tsp[i],caminho_tsp[i+1]]))
 
-	for i in range(len(car_minho)):
+	for i in range(len(car_minho)): #pegando o gasto de uma cidade para a outra no caminho_tsp, usando a ordem dos carros de car_minho
 		vaux_carro = car_minho[i]
 		path = caminho_tuple[i]
-		valor_caminho += g.get_dist(path[0],path[1])/g.car_list[vaux_carro].kmpl()
+		valor_caminho += g.get_dist(path[0],path[1])/g.car_list[vaux_carro].kmpl() #preco considerado km/l, dividindo acha-se litro, considerou-se 1l = 1 valor para o gasto
 		
 
-	for j in range(len(car_minho)):
+	for j in range(len(car_minho)):  #custo de pegar e devolver os carros nesse caminho_tsp
 		vaux_carro = car_minho[j]
 		vaux_vertice = caminho_tsp[j]
-		if (caminho_tsp[0] == caminho_tsp[j+1]):
+		if (caminho_tsp[0] == caminho_tsp[j+1]): #terminando a viagem, devolvendo o ultimo carro 
 			valor_caminho = valor_caminho + g.car_list[vaux_carro].back(caminho_tsp[0])
 			break
-		elif j < 1: 
+		elif j < 1: #iniciando a viagem, alugando o primeiro carro
 			valor_caminho = valor_caminho + g.car_list[vaux_carro].rent(caminho_tsp[0])
 		else:
-			if car_minho[j] != car_minho[j-1]:
+			if car_minho[j] != car_minho[j-1]: #se carro no vertice atual e diferente do anterior: Devolve o carro anterior no vertice atual e aluga o carro atual neste mesmo vertice 
 				valor_caminho= valor_caminho + g.car_list[car_minho[j-1]].back(caminho_tsp[j]) + g.car_list[vaux_carro].rent(caminho_tsp[j])		
 		
-		if(car_minho[j] != car_minho[j+1]):
+		if(car_minho[j] != car_minho[j+1]): #contando o número de carros usados
 			numero_carros+=1
 
 	return valor_caminho, numero_carros
 
-def exec_heurica(grafo, carro): #chamada da heuristica
-	g = Grafo(grafo,carro)
-	caminhos = tsp(g)
+def exec_heurica(grafo, carro): #chamada da heuristica. (grafo.graph, carro.car)
+	g = Grafo(grafo,carro) #info dos arquivos
+	caminhos = tsp(g) #rodando a tsp
 
 	caminho, valor = menor_caminho(g, caminhos)	
-	g.plot(caminho,	"antes.html")
+	g.plot(caminho,	"antes.html") #plotando o grafo antes das melhorias
 
-	caminho = twoOpt(g, caminho)
-	car = carroh(g,caminho)
+	caminho = twoOpt(g, caminho) #2opt
+	car = carroh(g,caminho) #rodando a heurisica do carro
 	print("Caminho a ser seguido: ")
 	print(caminho)
 	print("Ordem dos carros:")
 	print(car)
-	g.plot(caminho, "depois.html")
+	g.plot(caminho, "depois.html") #plotando o grafo depois da melhoria do 2opt
 	calculo,car = calculando_valor(g, caminho, car)
-	g.plot(caminho,"carros",car)
-	print(calculo, car)
+	print("Custo da viagem: ", calculo,"\nQuantidade de carros usados: ", car)
+	return caminho, car, calculo

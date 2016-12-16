@@ -1,4 +1,4 @@
-# CAR RENTER SALESMAN PROBLEMA
+# CAR RENTER SALESMAN PROBLEM
 
 ###### Engenharia de Computação e Informação - UFRJ
 
